@@ -1,13 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class MinigameSpawner : MonoBehaviour {
     public int firstBurst = 1;
     public GameObject[] itens;
     public float spawnDelay = 2;
     public float spawnDelayVariance = 1;
+    public float clalengeIncreaseDelay = 30;
+    public float clalengeIncreaseFactor = 2;
+    public Text levelText;
 
     float timer;
+    float challengeTimer;
+    int level { get { return (int)(Time.time / clalengeIncreaseDelay) + 1; } }
     //float spawnBoundary;
 
     void Start () {
@@ -24,6 +30,23 @@ public class MinigameSpawner : MonoBehaviour {
         } else {
             timer += Time.deltaTime;
         }
+
+        levelText.text = "LEVEL " + level;
+        Challenger();
+    }
+
+    void Challenger() {
+        if(challengeTimer > clalengeIncreaseDelay) {
+            challengeTimer = 0;
+            foreach(var go in itens) {
+                go.GetComponent<Rigidbody2D>().drag /= clalengeIncreaseFactor;
+            }
+            //levelText.text = "LEVEL " + level;
+            Debug.Log("level up " + level);
+            SFXManager.PlayLevelup();
+        }
+
+        challengeTimer += Time.deltaTime;
     }
 
     void Spawn() {

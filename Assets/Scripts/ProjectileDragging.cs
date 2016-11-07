@@ -3,6 +3,7 @@ using UnityEngine.Events;
 
 public class ProjectileDragging : MonoBehaviour {
     public float maxStretch = 3.0f;
+    public Vector3 holdOffset;
     public LineRenderer catapultLineFront;
     public LineRenderer catapultLineBack;
     public string lineRendererLayer = "Middleground";
@@ -85,6 +86,7 @@ public class ProjectileDragging : MonoBehaviour {
         clickedOn = false;
         onRelease.Invoke();
         col.isTrigger = false;
+        (col as CircleCollider2D).radius = .4f;
         SFXManager.PlayShoot();
     }
 
@@ -106,7 +108,7 @@ public class ProjectileDragging : MonoBehaviour {
     void LineRendererUpdate() {
         Vector2 catapultToProjectile = transform.position - catapultLineFront.transform.position;
         leftCatapultToProjectile.direction = catapultToProjectile;
-        Vector3 holdPoint = leftCatapultToProjectile.GetPoint(catapultToProjectile.magnitude + circleRadius);
+        Vector2 holdPoint = leftCatapultToProjectile.GetPoint(catapultToProjectile.magnitude ) + holdOffset;
         catapultLineFront.SetPosition(1, holdPoint);
         catapultLineBack.SetPosition(1, holdPoint);
     }

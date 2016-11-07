@@ -5,6 +5,7 @@ public class SFXManager : MonoBehaviour {
     public static SFXManager instance;
     public AudioClip explosion;
     public AudioClip shoot;
+    public AudioClip level_up;
 
     private AudioSource audioSource;
 
@@ -20,6 +21,11 @@ public class SFXManager : MonoBehaviour {
 
     public static void PlayShoot() {
         instance.audioSource.clip = instance.shoot;
+        instance.audioSource.Play();
+    }
+
+    public static void PlayLevelup() {
+        instance.audioSource.clip = instance.level_up;
         instance.audioSource.Play();
     }
 }

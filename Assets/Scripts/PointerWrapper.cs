@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class PointerWrapper : MonoBehaviour {
-#if UNITY_EDITOR || UNITY_STANDALONE
+#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBGL
     Vector2 delta;
     Vector3 mouseLastPosition;
     static PointerWrapper instance;

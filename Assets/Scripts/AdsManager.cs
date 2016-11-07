@@ -1,16 +1,13 @@
 ﻿using UnityEngine;
-using UnityEngine.Advertisements;
 using System.Collections;
+#if !UNITY_WEBGL
+using UnityEngine.Advertisements;
 
 public class AdsManager : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-
+    public void ShowAd() {
+        if(Advertisement.IsReady()) {
+            Advertisement.Show();
+        }
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }
+#endif

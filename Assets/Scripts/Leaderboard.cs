@@ -14,6 +14,10 @@ public class Leaderboard : MonoBehaviour {
     [SerializeField]
     Text[] texts;
     CanvasGroup canvasGroup;
+    [SerializeField]
+    GameObject highScore;
+    [SerializeField]
+    Text highScoreText;
 
     void Start() {
         leaderboardPath = Application.streamingAssetsPath + leaderboardPath;
@@ -49,6 +53,11 @@ public class Leaderboard : MonoBehaviour {
         while(i < leaderBoardData.data.Length && leaderBoardData.data[i] >= newScore)
             i++;
 
+        if(i == 0) {
+            highScore.SetActive(true);
+            highScoreText.text = "NEW HIGH SCORE!!!\n" + newScore;
+        }
+            
         UpdateScore(newScore, i);
 
         UpdateText();

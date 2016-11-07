@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.Advertisements;
 
 public class GameController : MonoBehaviour {
     public static GameController instance;
