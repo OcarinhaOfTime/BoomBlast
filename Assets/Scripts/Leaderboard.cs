@@ -6,6 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 [System.Serializable]
 public class LeaderboardData {
     public int[] data = new int[10];
+    public string[] dataName = new string[10];
 }
 
 public class Leaderboard : MonoBehaviour {
@@ -18,22 +19,30 @@ public class Leaderboard : MonoBehaviour {
     GameObject highScore;
     [SerializeField]
     Text highScoreText;
+    [SerializeField]
+    Text highScoreTextGame;
+    [SerializeField]
+    GameObject leaderboardEntry;
+    [SerializeField]
+    Transform leaderboardContent;
 
     void Start() {
-        leaderboardPath = Application.streamingAssetsPath + leaderboardPath;
+        leaderboardPath = Application.persistentDataPath + leaderboardPath;
         canvasGroup = GetComponent<CanvasGroup>();
-
-        if(File.Exists(leaderboardPath))
-            Load();
-
+        Load();
         UpdateText();
     }
 
     public void Show() {
         canvasGroup.alpha = 1;
+        canvasGroup.blocksRaycasts = true;
+        canvasGroup.interactable = true;
     }
 
     void Load() {
+        if(!File.Exists(leaderboardPath))
+            return;
+
         BinaryFormatter bf = new BinaryFormatter();
         using(FileStream fs = File.Open(leaderboardPath, FileMode.Open)) {
             leaderBoardData = bf.Deserialize(fs) as LeaderboardData;
@@ -73,9 +82,12 @@ public class Leaderboard : MonoBehaviour {
     }
 
     void UpdateText() {
+        highScoreTextGame.text = "HIGH SCORE " + leaderBoardData.data[0];
+
         for(int i = 0; i < leaderBoardData.data.Length; i++) {
             texts[i].text = (i + 1) + " - " + leaderBoardData.data[i];
         }
+
     }
 
     public void OnDestroy() {

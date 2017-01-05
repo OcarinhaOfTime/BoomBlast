@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 
 public class Disabler : MonoBehaviour, IPointerClickHandler {
     public float disableDelay = 3.0f;
+    public bool disableOnTap = true;
 
     float timer;
 
@@ -18,6 +19,7 @@ public class Disabler : MonoBehaviour, IPointerClickHandler {
     }
 
     public void OnPointerClick(PointerEventData eventData) {
-        gameObject.SetActive(false);
+        if(disableOnTap)
+            gameObject.SetActive(false);
     }
 }
